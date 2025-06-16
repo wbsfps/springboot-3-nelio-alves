@@ -43,6 +43,7 @@ public class TestConfig implements CommandLineRunner {
 
         var category1 = new Category(null, "Electronics");
         var category2 = new Category(null, "Books");
+        var category3 = new Category(null, "Computers");
 
         var p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
         var p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
@@ -54,6 +55,15 @@ public class TestConfig implements CommandLineRunner {
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2, order3));
         categoryRepository.saveAll(Arrays.asList(category1, category2));
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        p1.getCategories().add(category2);
+        p2.getCategories().add(category1);
+        p2.getCategories().add(category3);
+        p3.getCategories().add(category3);
+        p4.getCategories().add(category3);
+        p5.getCategories().add(category2);
+
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
     }
 }
