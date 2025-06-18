@@ -1,14 +1,8 @@
 package com.wbs.springboot_nelio_alves.config;
 
-import com.wbs.springboot_nelio_alves.entities.Category;
-import com.wbs.springboot_nelio_alves.entities.Order;
-import com.wbs.springboot_nelio_alves.entities.Product;
-import com.wbs.springboot_nelio_alves.entities.User;
+import com.wbs.springboot_nelio_alves.entities.*;
 import com.wbs.springboot_nelio_alves.entities.enums.OrderStatus;
-import com.wbs.springboot_nelio_alves.repository.CategoryRepository;
-import com.wbs.springboot_nelio_alves.repository.OrderRepository;
-import com.wbs.springboot_nelio_alves.repository.ProductRepository;
-import com.wbs.springboot_nelio_alves.repository.UserRepository;
+import com.wbs.springboot_nelio_alves.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -65,5 +62,12 @@ public class TestConfig implements CommandLineRunner {
         p5.getCategories().add(category2);
 
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        var orderItem1 = new OrderItem(order1, p1, 2, p1.getPrice());
+        var orderItem2 = new OrderItem(order1, p3, 1, p4.getPrice());
+        var orderItem3 = new OrderItem(order2, p3, 2, p1.getPrice());
+        var orderItem4 = new OrderItem(order3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
     }
 }

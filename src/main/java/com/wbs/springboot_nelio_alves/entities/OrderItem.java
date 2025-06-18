@@ -1,5 +1,6 @@
 package com.wbs.springboot_nelio_alves.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wbs.springboot_nelio_alves.entities.pk.OrderItemPK;
 import jakarta.persistence.*;
 
@@ -13,7 +14,7 @@ public class OrderItem implements Serializable {
     private static final long serialVersion = 1L;
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -27,6 +28,7 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
