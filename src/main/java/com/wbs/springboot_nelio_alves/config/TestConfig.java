@@ -64,7 +64,7 @@ public class TestConfig implements CommandLineRunner {
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
         var orderItem1 = new OrderItem(order1, p1, 2, p1.getPrice());
-        var orderItem2 = new OrderItem(order1, p3, 1, p4.getPrice());
+        var orderItem2 = new OrderItem(order1, p3, 1, p3.getPrice());
         var orderItem3 = new OrderItem(order2, p3, 2, p1.getPrice());
         var orderItem4 = new OrderItem(order3, p5, 2, p5.getPrice());
 
