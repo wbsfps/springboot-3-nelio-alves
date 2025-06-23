@@ -5,6 +5,7 @@ import com.wbs.springboot_nelio_alves.repository.UserRepository;
 import com.wbs.springboot_nelio_alves.resources.exceptions.ResourceExceptionHandler;
 import com.wbs.springboot_nelio_alves.services.exceptions.DatabaseException;
 import com.wbs.springboot_nelio_alves.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,7 +44,12 @@ public class UserService {
 
     public User update(Long id, User newUser) {
         User entity = repository.getReferenceById(id);
-        updateData(entity, newUser);
+
+        try {
+            updateData(entity, newUser);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
         return repository.save(entity);
     }
 
