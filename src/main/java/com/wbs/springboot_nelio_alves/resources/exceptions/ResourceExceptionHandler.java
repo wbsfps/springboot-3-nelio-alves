@@ -1,5 +1,6 @@
 package com.wbs.springboot_nelio_alves.resources.exceptions;
 
+import com.wbs.springboot_nelio_alves.services.exceptions.DatabaseException;
 import com.wbs.springboot_nelio_alves.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,19 @@ import java.time.Instant;
 public class ResourceExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<StantardError> resourceNotFound(ResourceNotFoundException exception, HttpServletRequest request) {
+    public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException exception, HttpServletRequest request) {
         String error = "Resource not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StantardError stantardError = new StantardError(Instant.now(), status.value(), error, exception.getMessage(), request.getRequestURI());
+        StandardError stantardError = new StandardError(Instant.now(), status.value(), error, exception.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(stantardError);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException databaseException, HttpServletRequest request) {
+        String error = "Database error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError stantardError = new StandardError(Instant.now(), status.value(), error, databaseException.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(status).body(stantardError);
     }
